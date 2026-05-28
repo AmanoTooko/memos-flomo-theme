@@ -1,966 +1,661 @@
 /* flomo-like skin for Memos
-   Paste into: Settings -> System -> Additional style
-   Updated for: compact sidebar, recent calendar, calmer palette, better wide-screen layout. */
+Paste into: Settings -> System -> Additional style
+Updated for: Absolute strict alignment, robust layout, solid green hover. */
 
 :root {
-  --background: #f8f8f7;
-  --foreground: #2f312f;
-  --card: #ffffff;
-  --card-foreground: #2f312f;
-  --popover: #ffffff;
-  --popover-foreground: #2f312f;
-  --primary: #31c76a;
-  --primary-foreground: #ffffff;
-  --secondary: #f5f5f4;
-  --secondary-foreground: #525552;
-  --muted: #f5f5f4;
-  --muted-foreground: #a4a8a4;
-  --accent: #eff8f2;
-  --accent-foreground: #2f312f;
-  --destructive: #eb5757;
-  --destructive-foreground: #ffffff;
-  --border: #e8e9e5;
-  --input: #e8e9e5;
-  --ring: rgba(49, 199, 106, 0.14);
-  --sidebar: #f8f8f7;
-  --sidebar-foreground: #333633;
-  --sidebar-accent: #31c76a;
-  --sidebar-accent-foreground: #ffffff;
-  --radius: 0.875rem;
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
-  --shadow: 0 8px 18px rgba(0, 0, 0, 0.035);
-  --shadow-md: 0 12px 26px rgba(0, 0, 0, 0.045);
-  --shadow-lg: 0 18px 34px rgba(0, 0, 0, 0.055);
-  --font-sans:
-    BarlowF, "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif;
+--background: #fbfbfa;
+--foreground: #2f312f;
+--card: #ffffff;
+--card-foreground: #2f312f;
+--popover: #ffffff;
+--popover-foreground: #2f312f;
+--primary: #31c76a;
+--primary-foreground: #ffffff;
+--secondary: #f5f5f4;
+--secondary-foreground: #525552;
+--muted: #f5f5f4;
+--muted-foreground: #a4a8a4;
+--accent: #eff8f2;
+--accent-foreground: #2f312f;
+--destructive: #eb5757;
+--destructive-foreground: #ffffff;
+--border: #ebece8;
+--input: #ebece8;
+--ring: rgba(49, 199, 106, 0.14);
+--sidebar: #fbfbfa;
+--sidebar-foreground: #333633;
+--sidebar-accent: #31c76a;
+--sidebar-accent-foreground: #ffffff;
+--radius: 0.875rem;
+--font-sans:
+BarlowF, "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif;
 }
 
+/* STREAMING_CHUNK:Base styling... */
 html,
 body {
-  background: var(--background);
-  color: var(--foreground);
+background: var(--background);
+color: var(--foreground);
 }
 
 body {
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+font-family: var(--font-sans);
+-webkit-font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
 }
 
 #root,
 main,
 section,
 aside {
-  background: transparent;
+background: transparent;
 }
 
 body * {
-  letter-spacing: 0;
+letter-spacing: 0;
 }
 
-/* Overall desktop layout */
-div[class*="justify-center"][class*="sm:pl-16"] {
-  justify-content: center;
-}
+/* STREAMING_CHUNK:Global desktop layout... /
+/ =========================================
 
+整体桌面端大盘布局
+========================================= /
 @media (min-width: 768px) {
-  div[class*="justify-center"][class*="sm:pl-16"] {
-    padding-left: 0 !important;
-  }
-
-  div[class*="group flex flex-col justify-start items-start fixed top-0 left-0"] {
-    display: none !important;
-  }
-
-  div.fixed.top-0.left-16.h-svh.shrink-0 {
-    left: 0;
-    width: 13.75rem;
-    border-right: 1px solid #e8e9e5;
-    background: #f8f8f7;
-  }
-
-  div[class*="md:pl-64"] {
-    padding-left: 13.75rem;
-  }
-
-  div[class*="md:pl-64"] > div[class*="mx-auto"] {
-    max-width: 52rem;
-    margin-left: 0;
-    margin-right: auto;
-    padding-top: 1.6rem;
-    padding-left: 0;
-    padding-right: 1rem;
-  }
-
-  main > section[class*="@container"][class*="md:flex-row"] {
-    align-items: flex-start;
-    width: 100%;
-    max-width: 88rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  main > section[class*="@container"] > div.sticky.top-0.h-svh.shrink-0 {
-    width: 28rem;
-    border-right: 1px solid #e8e9e5;
-    background: #f8f8f7;
-  }
-
-  main > section[class*="@container"] > div[class*="min-w-0"][class*="flex-1"] > div[class*="mx-auto"] {
-    margin-left: 0;
-    margin-right: auto;
-    padding-top: 1.4rem;
-    padding-left: 1.55rem;
-    padding-right: 1rem;
-  }
-
-  main div.flex.flex-col.justify-start.w-full.max-w-2xl.mx-auto {
-    max-width: 53rem !important;
-    margin-left: 0;
-    margin-right: auto;
-  }
+/ 隐藏原生最左侧的设置导航栏 */
+header.fixed.top-0.left-0,
+div.w-16.fixed.top-0.left-0,
+div.w-14.fixed.top-0.left-0 {
+display: none !important;
 }
 
-@media (min-width: 1440px) {
-  div[class*="md:pl-64"] > div[class*="mx-auto"] {
-    max-width: 53rem;
-    margin-left: 0;
-    padding-left: 0;
-  }
+/* 移除原生带来的整体强制左缩进 */
+div.sm:pl-16,
+div.md:pl-16 {
+padding-left: 0 !important;
 }
 
-@media (min-width: 768px) and (max-width: 1180px) {
-  main > section[class*="@container"] > div.sticky.top-0.h-svh.shrink-0 {
-    width: 23rem;
-  }
+#root > div {
+justify-content: center !important;
 }
 
-.max-w-2xl {
-  max-width: 53rem;
+/* 整体容器居中对齐，修复间隔过大问题 */
+main > section {
+align-items: flex-start !important;
+width: 100% !important;
+max-width: 72rem !important;
+margin: 0 auto !important;
+padding: 0 2rem !important;
+gap: 0 !important;
 }
 
-/* Left rail */
-a[id^="header-"] {
-  min-height: 2.45rem;
-  border: 0;
-  border-radius: 0.65rem;
-  font-size: 0.98rem;
-  font-weight: 600;
-  color: #313431;
-  box-shadow: none;
+/* 侧边栏加宽解决横向滚动条，自然跟随正文滚动 */
+main > section > div.sticky.top-0 {
+position: relative !important;
+height: auto !important;
+max-height: none !important;
+overflow: hidden !important;
+width: 16.5rem !important;
+border-right: none !important;
+background: transparent !important;
+padding: 0 0 0 0 !important;
+}
+main > section > div.sticky > aside {
+
+overflow: hidden !important;
+
 }
 
-a[id^="header-"][aria-current="page"] {
-  background: #31c76a;
-  color: #ffffff;
+
+.memos-flomo-native-statistics + div {
+    padding-inline-start: 0 !important;
+    padding-inline-end: 0 !important;
+}
+/* 右侧主内容区，拉近与侧边栏的距离 /
+main > section > div[class="min-w-0"] {
+padding-top: 1.5rem !important;
+padding-left: 1rem !important;
+padding-right: 0 !important;
 }
 
-a[id^="header-"][aria-current="page"] svg,
-a[id^="header-"][aria-current="page"] span {
-  color: #ffffff;
+/* 右侧信息流限宽 */
+main div.flex.flex-col.justify-start.w-full.max-w-2xl.mx-auto {
+max-width: 52rem !important;
+margin-left: 0 !important;
+margin-right: auto !important;
+}
 }
 
-a[id^="header-"]:not([aria-current="page"]) {
-  background: transparent;
-  color: #313431;
-  opacity: 1;
+/* STREAMING_CHUNK:Sidebar alignment constraints... /
+/ =========================================
+2. 侧边栏绝对对齐系统
+========================================= /
+/ 彻底清空 Memos 原生的 Padding 干扰 */
+aside,
+aside > div {
+padding-left: 0 !important;
+padding-right: 0 !important;
 }
 
-a[id^="header-"]:hover {
-  background: #eef7f1;
-  color: #2b2e2b;
+/* A. 身份与日历区：1rem 基础外边距 */
+.memos-flomo-sidebar-identity,
+.memos-flomo-calendar {
+margin-left: 1rem !important;
+margin-right: 1rem !important;
+padding-left: 0 !important;
+padding-right: 0 !important;
 }
 
-.text-lg.font-medium.text-foreground,
-.font-bold.text-lg.leading-10.text-ellipsis.overflow-hidden.text-foreground {
-  color: #1b1d1b;
-  font-weight: 700;
+/* B. Memos原生标题（捷径、标签）：1rem 基础外边距 */
+aside .group.flex.flex-row.justify-between.items-center,
+aside .text-sm.leading-6.text-muted-foreground,
+aside h3 {
+margin-left: 1rem !important;
+margin-right: 1rem !important;
+padding-left: 0 !important;
+padding-right: 0 !important;
+color: #9ea39e !important;
+font-size: 0.85rem !important;
+font-weight: 500 !important;
 }
 
-/* Explorer / sidebar */
-aside {
-  color: #5e625e;
+/* C. 快捷链接与标签：0.5rem 外边距 + 0.5rem 内边距 = 1rem 对齐线 */
+.memos-flomo-quick-links{
+margin-left: 0.5rem !important;
+margin-right: 0 !important;
+padding-left: 0 !important;
+padding-right: 0 !important;
 }
 
-div.relative.w-full.h-auto.flex.flex-row.justify-start.items-center {
-  margin-bottom: 0.55rem;
+
+.memos-flomo-tags-section {
+margin-left: 0!important;
+margin-right: 0 !important;
+padding-left: 0;
 }
 
-div.relative.w-full.h-auto.flex.flex-row.justify-start.items-center input {
-  height: 2.35rem;
-  border: 0;
-  border-radius: 999px;
-  background: #f1f2ef;
-  color: #6f736f;
-  box-shadow: none;
+
+/* C. 快捷链接与标签：0.5rem 外边距 + 0.5rem 内边距 = 1rem 对齐线 */
+
+.memos-flomo-quick-link {
+padding-left: 0.5rem !important;
+padding-right: 0.5rem !important;
+border-radius: 8px;
 }
 
-div.relative.w-full.h-auto.flex.flex-row.justify-start.items-center svg {
-  color: #b0b4b0;
+.memos-flomo-tag-item {
+padding-left: calc(0.5rem + var(--flomo-tag-depth, 0) * 1rem) !important;
+padding-right: 0.5rem !important;
+border-radius: 6px;
+font-size: 0.85rem;
 }
 
-aside .text-sm.leading-6,
-aside .text-sm {
-  color: #383b38;
+/* 强制标签垂直紧凑排列 /
+.memos-flomo-tags-section > div[class="flex-wrap"] {
+display: flex !important;
+flex-direction: column !important;
+align-items: stretch !important;
+width: 100% !important;
+gap: 0 !important;
 }
 
-aside .mt-3 {
-  margin-top: 0.55rem !important;
+/* STREAMING_CHUNK:Sidebar links and hover effects... /
+/ =========================================
+3. 导航与标签的悬浮态及高度控制
+========================================= */
+.memos-flomo-quick-link,
+.memos-flomo-tag-item {
+transition: all 140ms ease;
+display: flex !important;
+align-items: center;
+font-size: 0.95rem;
+text-decoration: none;
+width: 100% !important;
+box-sizing: border-box !important;
 }
 
-aside .gap-2 {
-  gap: 0.35rem !important;
+.memos-flomo-quick-link {
+color: #333633;
+font-weight: 500;
+min-height: 2.3rem;
+margin-bottom: 2px;
 }
 
-aside .gap-3 {
-  gap: 0.45rem !important;
+/* 纯绿背景，纯白文字选中态 */
+.memos-flomo-quick-link:hover,
+.memos-flomo-quick-link.is-active,
+a.memos-flomo-quick-link.is-active {
+background: #31c76a !important;
+color: #ffffff !important;
+font-weight: 500;
+}
+.memos-flomo-quick-link:hover .memos-flomo-quick-link-icon,
+.memos-flomo-quick-link.is-active .memos-flomo-quick-link-icon,
+a.memos-flomo-quick-link.is-active .memos-flomo-quick-link-icon {
+color: #ffffff !important;
 }
 
-aside .py-2 {
-  padding-top: 0.35rem !important;
-  padding-bottom: 0.35rem !important;
+.memos-flomo-quick-link-icon {
+width: 1.1rem;
+height: 1.1rem;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+flex: 0 0 1.1rem;
+color: #5e625e;
+margin-right: 0.6rem;
+}
+.memos-flomo-quick-link-icon svg {
+width: 1.1rem;
+height: 1.1rem;
+display: block;
 }
 
-aside .w-full.flex.flex-col.justify-start.items-start.mt-3.px-1.h-auto.shrink-0.flex-nowrap > div:first-child span {
-  color: #c89041;
-  font-size: 0.93rem;
-  font-weight: 600;
+/* 标签列表：强制纯黑字色，浅绿底色悬浮 */
+.memos-flomo-tag-item {
+min-height: 1.5rem !important;
+margin-bottom: 1px !important;
+color: #2f312f !important;
+background: transparent !important;
+font-weight: 500 !important;
+}
+.memos-flomo-tag-item span,
+.memos-flomo-tag-item div {
+color: #2f312f !important;
+}
+.memos-flomo-tag-item:hover,
+.memos-flomo-tag-item.is-active {
+background: #eef8f2 !important;
+color: #20b65a !important;
+}
+.memos-flomo-tag-item:hover span,
+.memos-flomo-tag-item.is-active span {
+color: #20b65a !important;
 }
 
-aside .border-dashed {
-  border-color: #e8e9e5;
-  background: #ffffff;
-  color: #a1a5a1;
-}
-
-/* JS-rendered flomo-style recent calendar */
+/* STREAMING_CHUNK:Calendar heatmap configuration... /
+/ =========================================
+4. JS 热力图与左上角统计 (垂直排列，对齐修复)
+========================================= */
 .memos-flomo-native-statistics {
-  display: none !important;
+display: none !important;
 }
 
 .memos-flomo-calendar + .group.w-full.mt-2,
 .memos-flomo-calendar ~ .group.w-full.mt-2:has([role="grid"][aria-label^="Calendar for"]) {
-  display: none !important;
+display: none !important;
 }
 
 .memos-flomo-calendar {
-  container-type: inline-size;
-  --flomo-calendar-cell: clamp(0.78rem, 3.55cqw, 0.95rem);
-  --flomo-calendar-gap: clamp(0.12rem, 0.52cqw, 0.2rem);
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.56rem;
-  margin: 0.55rem auto 0.82rem;
-  padding: 0 0.75rem 0.05rem;
-  box-sizing: border-box;
-  color: #8d918d;
-  user-select: none;
-}
-
-.memos-flomo-calendar.is-loading {
-  min-height: 6.8rem;
-  align-items: center;
-  justify-content: center;
-  color: #b2b6b2;
-  font-size: 0.82rem;
+width: max-content !important;
+display: flex;
+flex-direction: column;
+margin-bottom: 1.5rem !important;
+box-sizing: border-box;
+color: #8d918d;
+user-select: none;
 }
 
 .memos-flomo-calendar-summary {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.55rem;
-  padding: 0.15rem 0.05rem 0.05rem;
+display: flex;
+justify-content: space-between;
+padding: 0.5rem 0 1.2rem 0;
 }
 
 .memos-flomo-calendar-stat {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.1rem;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+justify-content: center;
 }
 
 .memos-flomo-calendar-stat strong {
-  color: #969d99;
-  font-size: 1.55rem;
-  line-height: 1;
-  font-weight: 650;
+color: #5e625e;
+font-size: 1.8rem;
+line-height: 1;
+font-weight: 500;
 }
 
 .memos-flomo-calendar-stat span {
-  color: #8d918d;
-  font-size: 0.82rem;
-  line-height: 1.2;
-  font-weight: 600;
-  padding-left: 0;
+color: #a4a8a4;
+font-size: 0.75rem;
+line-height: 1.2;
+font-weight: 400;
+margin-top: 0.4rem;
 }
 
+/* 强制竖向列流 (grid-auto-flow: column)，实现一列为一周 */
 .memos-flomo-calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(var(--flomo-calendar-columns), minmax(0, 1fr));
-  grid-template-rows: repeat(7, var(--flomo-calendar-cell));
-  grid-auto-flow: column;
-  gap: var(--flomo-calendar-gap);
-  width: 100%;
-  justify-content: stretch;
-  align-items: center;
+display: grid !important;
+grid-template-columns: repeat(var(--flomo-calendar-columns), 14px) !important;
+grid-template-rows: repeat(7, 14px) !important;
+grid-auto-flow: column !important;
+gap: 4px !important;
+width: max-content !important;
+justify-content: stretch;
+align-items: center;
 }
 
 .memos-flomo-calendar-cell {
-  display: block;
-  width: var(--flomo-calendar-cell);
-  height: var(--flomo-calendar-cell);
-  justify-self: center;
-  border-radius: 0.16rem;
-  background: #f0f0ef;
-  border: 1px solid transparent;
-  color: transparent !important;
-  text-decoration: none;
-  transition:
-    background-color 140ms ease,
-    border-color 140ms ease,
-    transform 140ms ease;
+display: block;
+width: 14px !important;
+height: 14px !important;
+justify-self: center;
+border-radius: 3px;
+background: #f0f0ef;
+border: 1px solid transparent;
+color: transparent !important;
+text-decoration: none;
+position: relative;
+transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 200ms ease, border-color 200ms ease;
 }
 
 a.memos-flomo-calendar-cell:hover {
-  background: #dff4e7;
-  border-color: rgba(49, 199, 106, 0.26);
-  transform: translateY(-1px);
+transform: scale(1.45) !important;
+z-index: 10 !important;
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+border-color: rgba(0, 0, 0, 0.05) !important;
 }
 
 .memos-flomo-calendar-cell.is-outside {
-  opacity: 0;
-  pointer-events: none;
+opacity: 0;
+pointer-events: none;
 }
 
 .memos-flomo-calendar-cell.is-today {
-  border-color: rgba(49, 199, 106, 0.34);
+border-color: rgba(49, 199, 106, 0.4);
 }
 
-.memos-flomo-calendar-cell.level-1 {
-  background: #dff4e7;
-}
+.memos-flomo-calendar-cell.level-1 { background: #e0f5e8 !important; }
+.memos-flomo-calendar-cell.level-2 { background: #b0e8c6 !important; }
+.memos-flomo-calendar-cell.level-3 { background: #71d497 !important; }
+.memos-flomo-calendar-cell.level-4 { background: #31c76a !important; }
 
-.memos-flomo-calendar-cell.level-2 {
-  background: #c7efd5;
-}
-
-.memos-flomo-calendar-cell.level-3 {
-  background: #a4e3bb;
-}
-
-.memos-flomo-calendar-cell.level-4 {
-  background: #70d99a;
-}
-
+/* 修正月份错位：强制 grid-row: 1 锁定同一行 */
 .memos-flomo-calendar-month-labels {
-  display: none;
+display: grid !important;
+grid-template-columns: repeat(var(--flomo-calendar-columns), 14px) !important;
+gap: 4px !important;
+width: max-content !important;
+margin-top: 0.4rem !important;
+margin-left: 0 !important;
+color: #a4a8a4 !important;
+font-size: 0.75rem !important;
+user-select: none;
 }
 
-.memos-flomo-content-header {
-  width: 100%;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(14rem, 23.25rem);
-  align-items: center;
-  gap: 1rem;
-  margin: 0 0 1rem;
+.memos-flomo-calendar-month-labels span {
+text-align: left !important;
+padding: 0 !important;
+margin: 0 !important;
+display: block !important;
+line-height: 1 !important;
+grid-row: 1 !important;
 }
 
-.memos-flomo-content-title {
-  min-width: 0;
-  color: #252925;
-  font-size: 1.02rem;
-  line-height: 2.35rem;
-  font-weight: 650;
-}
-
-.memos-flomo-top-search {
-  width: 100%;
-  margin: 0;
-  justify-self: end;
-}
-
-.memos-flomo-top-search input {
-  height: 2.35rem !important;
-  border: 0 !important;
-  border-radius: 999px !important;
-  background: #eeeeec !important;
-  color: #626762 !important;
-  padding-left: 2.35rem !important;
-  padding-right: 2.6rem !important;
-  font-size: 0.98rem !important;
-}
-
-.memos-flomo-top-search input::placeholder {
-  color: #979b97 !important;
-}
-
-.memos-flomo-top-search svg {
-  left: 0.9rem !important;
-  width: 1.15rem !important;
-  color: #858a85 !important;
-  opacity: 1 !important;
-}
-
-.memos-flomo-top-search button,
-.memos-flomo-top-search [data-slot="button"] {
-  top: 50% !important;
-  right: 0.6rem !important;
-  transform: translateY(-50%);
-}
-
+/* STREAMING_CHUNK:Identity menu definitions... /
+/ =========================================
+5. 侧边栏身份标识 (Morine) 样式
+========================================= */
 .memos-flomo-sidebar-identity {
-  position: relative;
-  width: 100%;
-  min-height: 2.35rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 0 0.95rem;
-  padding: 0 0.75rem;
-  color: #202420;
-  font-size: 1.02rem;
-  line-height: 1.2;
-  font-weight: 700;
-  cursor: default;
-  z-index: 20;
+position: relative;
+min-height: 2.35rem;
+display: flex;
+align-items: center;
+justify-content: flex-start;
+margin-bottom: 1.5rem !important;
+color: #202420;
+font-size: 1.1rem;
+font-weight: 700;
+cursor: default;
+z-index: 20;
 }
 
 .memos-flomo-sidebar-identity::after {
-  content: "";
-  width: 0.45rem;
-  height: 0.45rem;
-  margin-left: 0.6rem;
-  border-right: 1.5px solid #8f958f;
-  border-bottom: 1.5px solid #8f958f;
-  transform: rotate(45deg) translateY(-0.12rem);
-  transition: transform 140ms ease;
+content: "";
+width: 0.45rem;
+height: 0.45rem;
+margin-left: 0.6rem;
+border-right: 1.5px solid #8f958f;
+border-bottom: 1.5px solid #8f958f;
+transform: rotate(45deg) translateY(-0.12rem);
+transition: transform 140ms ease;
 }
 
 .memos-flomo-sidebar-identity:hover::after,
 .memos-flomo-sidebar-identity:focus-within::after {
-  transform: rotate(225deg) translate(-0.08rem, -0.02rem);
+transform: rotate(225deg) translate(-0.08rem, -0.02rem);
 }
 
 .memos-flomo-sidebar-identity-label {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+min-width: 0;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
 }
 
+/* 强制重写身份菜单样式 */
 .memos-flomo-identity-menu {
-  position: absolute;
-  top: calc(100% - 0.1rem);
-  left: 0;
-  min-width: 11.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-  padding: 0.35rem;
-  border: 1px solid #e8e9e5;
-  border-radius: 0.65rem;
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.075);
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-0.25rem);
-  transition:
-    opacity 140ms ease,
-    transform 140ms ease;
+position: absolute !important;
+top: 100% !important;
+left: 0 !important;
+min-width: 11.5rem !important;
+display: flex !important;
+flex-direction: column !important;
+gap: 0.1rem !important;
+padding: 0.35rem !important;
+border: 1px solid #eceeea !important;
+border-radius: 0.65rem !important;
+background: rgba(255, 255, 255, 0.98) !important;
+box-shadow: 0 14px 30px rgba(0, 0, 0, 0.075) !important;
+opacity: 0 !important;
+visibility: hidden !important;
+transform: translateY(-0.25rem) !important;
+transition: opacity 140ms ease, transform 140ms ease !important;
 }
 
 .memos-flomo-sidebar-identity:hover .memos-flomo-identity-menu,
 .memos-flomo-sidebar-identity:focus-within .memos-flomo-identity-menu {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
+opacity: 1 !important;
+visibility: visible !important;
+transform: translateY(0) !important;
 }
 
 .memos-flomo-identity-menu a {
-  display: flex;
-  align-items: center;
-  min-height: 1.9rem;
-  padding: 0 0.55rem;
-  border-radius: 0.45rem;
-  color: #4f5751;
-  font-size: 0.86rem;
-  font-weight: 500;
-  text-decoration: none;
+display: flex !important;
+align-items: center !important;
+min-height: 1.9rem !important;
+padding: 0 0.55rem !important;
+border-radius: 0.45rem !important;
+color: #4f5751 !important;
+font-size: 0.86rem !important;
+font-weight: 500 !important;
+text-decoration: none !important;
 }
 
 .memos-flomo-identity-menu a:hover,
 .memos-flomo-identity-menu a.is-active {
-  background: #31c76a;
-  color: #ffffff;
+background: #31c76a !important;
+color: #ffffff !important;
 }
 
 .memos-flomo-sidebar-divider {
-  display: none;
-  width: calc(100% - 1.5rem);
-  height: 1px;
-  margin: 0.65rem auto 0.72rem;
-  border-radius: 999px;
-  background:
-    linear-gradient(90deg, rgba(49, 199, 106, 0), rgba(49, 199, 106, 0.36) 48%, rgba(49, 199, 106, 0)),
-    linear-gradient(90deg, rgba(49, 199, 106, 0.04), rgba(49, 199, 106, 0.1), rgba(49, 199, 106, 0.04));
+display: none;
 }
 
-/* Calendar heatmap */
-[role="grid"] button[aria-label],
-[role="grid"] div[class*="cursor-default"] {
-  border: 0;
-  border-radius: 0.22rem;
-  box-shadow: none;
-  width: 0.72rem !important;
-  height: 0.72rem !important;
-  min-width: 0.72rem !important;
-  min-height: 0.72rem !important;
-  font-size: 0;
-  font-weight: 500;
-  transition: transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+/* STREAMING_CHUNK:Header and input styling... /
+/ =========================================
+6. 顶部搜索与标题
+========================================= */
+.memos-flomo-content-header {
+width: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin: 0 0 1.5rem;
 }
 
-[role="grid"] button[aria-label]:hover,
-[role="grid"] div[class*="cursor-default"]:hover {
-  transform: scale(1.2) !important;
+.memos-flomo-content-title {
+color: #252925;
+font-size: 1.1rem;
+font-weight: 700;
 }
 
-[role="grid"] {
-  align-items: center !important;
-  gap: 0.3rem !important;
+.memos-flomo-top-search {
+width: 18rem !important;
+margin: 0 !important;
 }
 
-[role="grid"] > [role="rowgroup"] {
-  display: grid !important;
-  grid-template-columns: repeat(7, 0.72rem) !important;
-  justify-content: center !important;
+.memos-flomo-top-search input {
+height: 2.35rem !important;
+border: 0 !important;
+border-radius: 8px !important;
+background: #f4f5f4 !important;
+color: #626762 !important;
+padding-left: 2.35rem !important;
+padding-right: 2.6rem !important;
+font-size: 0.95rem !important;
 }
 
-[role="grid"] [role="row"] {
-  gap: 0.3rem !important;
-}
-
-[role="grid"] button[aria-label] {
-  background: #f0f1ef;
-  color: transparent;
-}
-
-[role="grid"] button[aria-disabled="true"],
-[role="grid"] div[class*="cursor-default"] {
-  background: #f0f1ef;
-  color: transparent;
-}
-
-[role="grid"] button[aria-disabled="false"] {
-  background: #d9f3e3;
-  color: transparent;
-  font-weight: 600;
-}
-
-[role="grid"] button[class*="bg-primary/50"] {
-  background: #d8f3e2;
-}
-
-[role="grid"] button[class*="bg-primary/70"] {
-  background: #b6eac8;
-}
-
-[role="grid"] button[class*="bg-primary/85"] {
-  background: #8cdeac;
-}
-
-[role="grid"] button[class*="bg-primary"]:not([class*="/"]) {
-  background: #31c76a;
-}
-
-[role="grid"] button[aria-current="date"] {
-  outline: 1px solid rgba(49, 199, 106, 0.5);
-  outline-offset: 0;
-}
-
-[role="columnheader"] {
-  color: #8b8f8b !important;
-  font-size: 0.72rem !important;
-  font-weight: 500 !important;
-  padding: 0.15rem 0 !important;
-}
-
-aside header button[type="button"].py-0\.5 {
-  color: #8b8f8b;
-  font-size: 0.98rem;
-  font-weight: 600;
-}
-
-aside header nav {
-  opacity: 0.55;
-}
-
-/* Memo list */
+/* =========================================
+7. 扁平化笔记列表卡片
+========================================= */
 article {
-  border: 0;
-  border-radius: 0.72rem;
-  background: #ffffff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.015);
-  padding-top: 0.95rem;
-  padding-bottom: 0.95rem;
-  transition:
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    transform 160ms ease;
+border: 1px solid #f0f0f0 !important;
+border-radius: 12px !important;
+background: #ffffff;
+box-shadow: none !important;
+padding: 1.25rem !important;
+margin-bottom: 1rem !important;
+transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 
 article:hover {
-  border-color: transparent;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.028);
-  transform: translateY(-1px);
+border-color: #e4e4e4 !important;
 }
 
 article > div:first-child button:first-child,
 article > div:first-child a:last-child,
 article relative-time,
 article .text-muted-foreground {
-  color: #9ea39e;
+color: #a4a8a4;
 }
 
 article .text-sm.leading-tight {
-  font-size: 0.9rem;
+font-size: 0.9rem;
 }
 
-/* Filter chips */
-div[class*="flex-row"][class*="flex-wrap"][class*="gap-2"] > div[class*="rounded-full"] {
-  background: #f3f7f4;
-  border-color: #e6efe8;
-  color: #4c514c;
-  box-shadow: none;
-}
-
-/* Editor */
+/* =========================================
+8. 扁平化编辑器
+========================================= */
 div:has(> div.w-full.flex.flex-col.flex-1 > .memo-editor-content),
 .memos-flomo-editor {
-  border: 1px solid #e8e9e5;
-  border-radius: 0.72rem;
-  background: #ffffff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.018);
-  padding-top: 0.95rem;
-  padding-bottom: 0.55rem;
-  min-height: 7.1rem;
-  transition:
-    min-height 180ms ease,
-    box-shadow 180ms ease,
-    border-color 180ms ease;
+border: 1px solid #e4e4e4 !important;
+border-radius: 10px !important;
+background: #ffffff !important;
+box-shadow: none !important;
+padding: 1rem !important;
+min-height: 7.1rem;
+transition: all 180ms ease;
 }
 
 div:has(> div.w-full.flex.flex-col.flex-1 > .memo-editor-content):focus-within,
 .memos-flomo-editor:focus-within {
-  border-color: rgba(49, 199, 106, 0.72);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  min-height: 13.2rem;
+border-color: #31c76a !important;
+box-shadow: 0 0 0 3px rgba(49, 199, 106, 0.1) !important;
+min-height: 13.2rem;
 }
 
 .memo-editor-content,
 .memos-flomo-editor .memo-editor-content {
-  border: 1px solid rgba(49, 199, 106, 0.92);
-  border-radius: 0.62rem;
-  padding: 0.34rem 0.72rem 0.36rem;
-  background: #ffffff;
+border: none !important;
+padding: 0 !important;
+background: transparent !important;
 }
 
 .memo-editor-content textarea,
 textarea[data-slot="textarea"] {
-  min-height: 2.65rem;
-  font-size: 0.92rem;
-  line-height: 1.72;
-  color: #2f312f;
-  transition: min-height 180ms ease;
+min-height: 4rem;
+font-size: 0.95rem;
+line-height: 1.7;
+color: #2f312f;
+}
+
+.memo-editor-content textarea::placeholder,
+textarea[data-slot="textarea"]::placeholder {
+color: #a4a8a4 !important;
 }
 
 div:has(> div.w-full.flex.flex-col.flex-1 > .memo-editor-content):focus-within .memo-editor-content textarea,
 .memos-flomo-editor:focus-within .memo-editor-content textarea {
-  min-height: 8.4rem;
-}
-
-.memo-editor-content textarea::placeholder,
-textarea[data-slot="textarea"]::placeholder,
-input[data-slot="input"]::placeholder {
-  color: #b6bbb6;
-}
-
-/* Editor toolbar controls */
-div:has(> div.w-full.flex.flex-col.flex-1 > .memo-editor-content) [data-slot="button"][class*="size-8"],
-.memos-flomo-editor [data-slot="button"][class*="size-8"] {
-  width: 2.2rem;
-  height: 2.2rem;
-  border-radius: 999px;
-  border: 1px solid #e8e9e5;
-  background: #f6f7f5;
-  color: #7d817d;
-  box-shadow: none;
+min-height: 8.4rem;
 }
 
 button[data-slot="button"] {
-  border-radius: 0.8rem;
-  font-weight: 600;
-  box-shadow: none;
-}
-
-button[data-slot="button"]:not([class*="size-8"]):not(.bg-primary):not([class*="bg-primary"]) {
-  background: #f4f5f3;
-  border: 1px solid #e8e9e5;
-  color: #5d615d;
+border-radius: 6px;
+font-weight: 500;
+box-shadow: none;
 }
 
 button[data-slot="button"].bg-primary,
 button[data-slot="button"][class*="bg-primary"] {
-  background: #31c76a;
-  color: #ffffff;
-  border-color: transparent;
+background: #31c76a !important;
+color: #ffffff !important;
+border-color: transparent !important;
 }
 
-/* Visibility selector */
-button.inline-flex.items-center.px-2.text-sm.text-muted-foreground {
-  color: #a1a6a1;
-  opacity: 1;
-}
-
-button.inline-flex.items-center.px-2.text-sm.text-muted-foreground:hover {
-  color: #808580;
-}
-
-/* Popovers and dropdowns */
-[data-slot="dropdown-menu-content"],
-[data-slot="dropdown-menu-sub-content"],
-[data-slot="popover-content"],
-[data-slot="select-content"],
-[data-slot="dialog-overlay"] + div,
-[data-slot="sheet-content"] {
-  background: #ffffff;
-  border: 1px solid #e8e9e5;
-  border-radius: 0.95rem;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
-}
-
-[data-slot="dropdown-menu-item"],
-[data-slot="select-item"] {
-  border-radius: 0.7rem;
-}
-
-[data-slot="dropdown-menu-item"]:hover,
-[data-slot="select-item"]:focus {
-  background: #f2f8f4;
-}
-
-[data-slot="tooltip-content"] {
-  border-radius: 0.55rem;
-  background: rgba(51, 53, 51, 0.94);
-  color: #ffffff;
-}
-
-/* Optional JS-enhanced inline tools */
+/* STREAMING_CHUNK:Editor inline tools... */
 .memos-flomo-inline-tools {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.1rem;
-  margin-left: 0.45rem;
+display: inline-flex;
+align-items: center;
+gap: 0.1rem;
+margin-left: 0.45rem;
 }
 
 .memos-flomo-inline-sep {
-  width: 1px;
-  height: 1rem;
-  margin: 0 0.2rem;
-  background: #e8e9e5;
+width: 1px;
+height: 1rem;
+margin: 0 0.2rem;
+background: #eceeea;
 }
 
 .memos-flomo-inline-tool {
-  appearance: none;
-  border: 0;
-  background: transparent;
-  color: #a0a5a0;
-  width: 1.82rem;
-  min-width: 1.82rem;
-  height: 1.82rem;
-  border-radius: 0.45rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font: inherit;
-  font-size: 1rem;
-  line-height: 1;
-  cursor: pointer;
-  transition:
-    color 140ms ease,
-    background-color 140ms ease;
+appearance: none;
+border: 0;
+background: transparent;
+color: #a0a5a0;
+width: 1.82rem;
+min-width: 1.82rem;
+height: 1.82rem;
+border-radius: 0.45rem;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+font: inherit;
+font-size: 1rem;
+line-height: 1;
+cursor: pointer;
+transition: all 140ms ease;
 }
 
 .memos-flomo-inline-tool:hover {
-  color: #686d68;
-  background: #f5f5f4;
+color: #686d68;
+background: #f5f5f4;
 }
 
-.memos-flomo-inline-tool[data-kind="list"],
-.memos-flomo-inline-tool[data-kind="ordered"] {
-  font-size: 0.86rem;
-  font-weight: 700;
-}
-
-.memos-flomo-inline-tool[data-kind="strong"] {
-  font-weight: 700;
-  font-size: 0.95rem;
-}
-
-.memos-flomo-inline-tool[data-kind="media"] {
-  width: 1.82rem;
-  min-width: 1.82rem;
-  padding: 0;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0;
-}
-
-/* flomo-like shortcut area */
-.memos-flomo-quick-links {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.08rem;
-  margin: 0.25rem 0 1.5rem;
-  padding: 0 0.75rem;
-}
-
-.memos-flomo-quick-links::before {
-  display: none;
-}
-
-.memos-flomo-quick-link {
-  position: relative;
-  width: 100%;
-  min-height: 2.45rem;
-  display: flex;
-  align-items: center;
-  gap: 0.56rem;
-  border-radius: 0.4rem;
-  color: #202520;
-  font-size: 0.94rem;
-  font-weight: 600;
-  line-height: 1;
-  text-decoration: none;
-  padding: 0 0.85rem;
-  transition:
-    background-color 140ms ease,
-    color 140ms ease;
-}
-
-.memos-flomo-quick-link::before {
-  display: none;
-}
-
-.memos-flomo-quick-link:hover {
-  background: #31c76a;
-  color: #ffffff;
-}
-
-.memos-flomo-quick-link.is-active,
-a.memos-flomo-quick-link.is-active {
-  background: #31c76a !important;
-  color: #ffffff !important;
-  font-weight: 700;
-  padding: 0 0.85rem;
-}
-
-.memos-flomo-quick-link.is-active::before,
-a.memos-flomo-quick-link.is-active::before {
-  background: rgba(49, 199, 106, 0.82);
-}
-
-.memos-flomo-quick-link.is-active:hover,
-a.memos-flomo-quick-link.is-active:hover {
-  background: #31c76a !important;
-  color: #ffffff !important;
-}
-
-.memos-flomo-quick-link-icon {
-  width: 1.15rem;
-  height: 1.15rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 1.15rem;
-  color: currentColor;
-}
-
-.memos-flomo-quick-link-icon svg {
-  width: 1.15rem;
-  height: 1.15rem;
-  display: block;
-}
-
-/* Vertical tag tree */
-.memos-flomo-tags-section .w-full.flex.flex-row.justify-start.items-center.relative.flex-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0.08rem;
-}
-
-.memos-flomo-tags-section .memos-flomo-tag-item {
-  width: 100%;
-  max-width: 100%;
-  min-height: 1.65rem;
-  padding-left: calc(var(--flomo-tag-depth, 0) * 1rem);
-  color: #303330;
-  border-radius: 0.45rem;
-  opacity: 1;
-}
-
-.memos-flomo-tags-section .memos-flomo-tag-item:hover {
-  background: #eef8f2;
-  color: #20b65a;
-  opacity: 1;
-}
-
-.memos-flomo-tags-section .memos-flomo-tag-item[data-flomo-tag-depth]:not([data-flomo-tag-depth="0"]) {
-  color: #676c67;
-  font-size: 0.9rem;
-}
-
-/* Links and subtle text */
 a {
-  color: #5e84ff;
-}
-
-article a:hover {
-  opacity: 0.85;
-}
-
-hr,
-[data-slot="separator"] {
-  background: #e8e9e5;
-}
-
-div.sticky.top-0 {
-  background: rgba(248, 248, 247, 0.92);
-  backdrop-filter: blur(10px);
-  box-shadow: none;
+color: #5e84ff;
 }
 
 @media (max-width: 767px) {
-  .max-w-2xl {
-    max-width: none;
-  }
-
-  article {
-    border-radius: 0.9rem;
-  }
-
-  div:has(> div.w-full.flex.flex-col.flex-1 > .memo-editor-content),
-  .memos-flomo-editor {
-    border-radius: 0.95rem;
-  }
-
-  .memos-flomo-content-header {
-    grid-template-columns: 1fr;
-    gap: 0.65rem;
-  }
+.max-w-2xl {
+max-width: none;
+}
+.memos-flomo-content-header {
+flex-direction: column;
+align-items: flex-start;
+gap: 0.8rem;
+}
+.memos-flomo-top-search {
+width: 100% !important;
+}
 }

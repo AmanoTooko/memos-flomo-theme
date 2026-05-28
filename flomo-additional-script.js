@@ -577,9 +577,8 @@
     const node = inRange && !isFuture ? document.createElement("a") : document.createElement("span");
 
     node.className = `memos-flomo-calendar-cell level-${level}${inRange ? "" : " is-outside"}${key === formatLocalDate(today) ? " is-today" : ""}`;
-    node.title = key;
-    node.setAttribute("aria-label", key);
-
+    node.title = `${key} · ${count} 篇笔记`;
+    node.setAttribute('aria-label', `${key} · ${count} 篇笔记`);
     if (node.tagName === "A") {
       node.href = getDisplayTimeHref(date);
     }
@@ -641,7 +640,7 @@
       grid.appendChild(createCalendarCell({ date, counts, maxCount, rangeStart, rangeEnd, today }));
     });
 
-    calendar.append(summary, grid);
+    calendar.append(summary, grid, createCalendarMonthLabels(dates, rangeStart, rangeEnd));
   };
 
   const findNativeStatistics = (explorerBody) => {
