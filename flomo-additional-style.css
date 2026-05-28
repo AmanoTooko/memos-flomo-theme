@@ -1,6 +1,6 @@
 /* flomo-like skin for Memos
    Paste into: Settings -> System -> Additional style
-   Updated for: compact sidebar, calmer palette, better wide-screen layout. */
+   Updated for: compact sidebar, recent calendar, calmer palette, better wide-screen layout. */
 
 :root {
   --background: #f8f8f6;
@@ -61,20 +61,20 @@ body * {
 
 /* Overall desktop layout */
 div[class*="justify-center"][class*="sm:pl-16"] {
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 @media (min-width: 768px) {
+  div[class*="justify-center"][class*="sm:pl-16"] {
+    padding-left: 0 !important;
+  }
+
   div[class*="group flex flex-col justify-start items-start fixed top-0 left-0"] {
-    width: 4.25rem;
-    padding-left: 0.55rem;
-    padding-right: 0.55rem;
-    border-right: 0;
-    background: #f8f8f6;
+    display: none !important;
   }
 
   div.fixed.top-0.left-16.h-svh.shrink-0 {
-    left: 4.25rem;
+    left: 0;
     width: 13.75rem;
     border-right: 1px solid #eceeea;
     background: #f8f8f6;
@@ -92,6 +92,34 @@ div[class*="justify-center"][class*="sm:pl-16"] {
     padding-left: 0;
     padding-right: 1rem;
   }
+
+  main > section[class*="@container"][class*="md:flex-row"] {
+    align-items: flex-start;
+    width: 100%;
+    max-width: 73.5rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  main > section[class*="@container"] > div.sticky.top-0.h-svh.shrink-0 {
+    width: 22rem;
+    border-right: 1px solid #eceeea;
+    background: #f8f8f6;
+  }
+
+  main > section[class*="@container"] > div[class*="min-w-0"][class*="flex-1"] > div[class*="mx-auto"] {
+    margin-left: 0;
+    margin-right: auto;
+    padding-top: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1.25rem;
+  }
+
+  main div.flex.flex-col.justify-start.w-full.max-w-2xl.mx-auto {
+    max-width: 49rem;
+    margin-left: 0;
+    margin-right: auto;
+  }
 }
 
 @media (min-width: 1440px) {
@@ -102,8 +130,14 @@ div[class*="justify-center"][class*="sm:pl-16"] {
   }
 }
 
+@media (min-width: 768px) and (max-width: 1180px) {
+  main > section[class*="@container"] > div.sticky.top-0.h-svh.shrink-0 {
+    width: 18.75rem;
+  }
+}
+
 .max-w-2xl {
-  max-width: 52rem;
+  max-width: 49rem;
 }
 
 /* Left rail */
@@ -200,23 +234,308 @@ aside .border-dashed {
   color: #a1a5a1;
 }
 
+/* JS-rendered flomo-style recent calendar */
+.memos-flomo-native-statistics {
+  display: none !important;
+}
+
+.memos-flomo-calendar + .group.w-full.mt-2,
+.memos-flomo-calendar ~ .group.w-full.mt-2:has([role="grid"][aria-label^="Calendar for"]) {
+  display: none !important;
+}
+
+.memos-flomo-calendar {
+  container-type: inline-size;
+  --flomo-calendar-cell: clamp(0.66rem, 3.3cqw, 0.82rem);
+  --flomo-calendar-gap: clamp(0.24rem, 1.28cqw, 0.42rem);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.56rem;
+  margin: 0.28rem auto 0.78rem;
+  padding: 0 0.25rem 0.05rem;
+  box-sizing: border-box;
+  color: #8d918d;
+  user-select: none;
+}
+
+.memos-flomo-calendar.is-loading {
+  min-height: 6.8rem;
+  align-items: center;
+  justify-content: center;
+  color: #b2b6b2;
+  font-size: 0.82rem;
+}
+
+.memos-flomo-calendar-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  padding: 0.15rem 0.05rem 0.05rem;
+}
+
+.memos-flomo-calendar-stat {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+}
+
+.memos-flomo-calendar-stat strong {
+  color: #969d99;
+  font-size: 1.34rem;
+  line-height: 1;
+  font-weight: 650;
+}
+
+.memos-flomo-calendar-stat span {
+  color: #8d918d;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  font-weight: 600;
+  padding-left: 0;
+}
+
+.memos-flomo-calendar-grid {
+  display: grid;
+  grid-template-rows: repeat(7, var(--flomo-calendar-cell));
+  grid-auto-flow: column;
+  grid-auto-columns: var(--flomo-calendar-cell);
+  gap: var(--flomo-calendar-gap);
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.memos-flomo-calendar-cell {
+  display: block;
+  width: var(--flomo-calendar-cell);
+  height: var(--flomo-calendar-cell);
+  border-radius: 0.28rem;
+  background: #f1f2f0;
+  border: 1px solid transparent;
+  color: transparent !important;
+  text-decoration: none;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+
+a.memos-flomo-calendar-cell:hover {
+  background: #d8f2e1;
+  border-color: rgba(49, 199, 106, 0.3);
+  transform: translateY(-1px);
+}
+
+.memos-flomo-calendar-cell.is-outside {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.memos-flomo-calendar-cell.is-today {
+  border-color: rgba(49, 199, 106, 0.42);
+}
+
+.memos-flomo-calendar-cell.level-1 {
+  background: #def4e6;
+}
+
+.memos-flomo-calendar-cell.level-2 {
+  background: #c4edd2;
+}
+
+.memos-flomo-calendar-cell.level-3 {
+  background: #8fdcad;
+}
+
+.memos-flomo-calendar-cell.level-4 {
+  background: #38c970;
+}
+
+.memos-flomo-calendar-month-labels {
+  display: none;
+}
+
+.memos-flomo-content-header {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 21.5rem);
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 1.05rem;
+}
+
+.memos-flomo-content-title {
+  min-width: 0;
+  color: #252925;
+  font-size: 1.02rem;
+  line-height: 2.35rem;
+  font-weight: 650;
+}
+
+.memos-flomo-top-search {
+  width: 100%;
+  margin: 0;
+  justify-self: end;
+}
+
+.memos-flomo-top-search input {
+  height: 2.35rem !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: #eeeeec !important;
+  color: #626762 !important;
+  padding-left: 2.35rem !important;
+  padding-right: 2.6rem !important;
+  font-size: 0.98rem !important;
+}
+
+.memos-flomo-top-search input::placeholder {
+  color: #979b97 !important;
+}
+
+.memos-flomo-top-search svg {
+  left: 0.9rem !important;
+  width: 1.15rem !important;
+  color: #858a85 !important;
+  opacity: 1 !important;
+}
+
+.memos-flomo-top-search button,
+.memos-flomo-top-search [data-slot="button"] {
+  top: 50% !important;
+  right: 0.6rem !important;
+  transform: translateY(-50%);
+}
+
+.memos-flomo-sidebar-identity {
+  position: relative;
+  width: 100%;
+  min-height: 2.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 0.65rem;
+  padding: 0 0.25rem;
+  color: #202420;
+  font-size: 1rem;
+  line-height: 1.2;
+  font-weight: 700;
+  cursor: default;
+  z-index: 20;
+}
+
+.memos-flomo-sidebar-identity::after {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-left: 0.6rem;
+  border-right: 1.5px solid #8f958f;
+  border-bottom: 1.5px solid #8f958f;
+  transform: rotate(45deg) translateY(-0.12rem);
+  transition: transform 140ms ease;
+}
+
+.memos-flomo-sidebar-identity:hover::after,
+.memos-flomo-sidebar-identity:focus-within::after {
+  transform: rotate(225deg) translate(-0.08rem, -0.02rem);
+}
+
+.memos-flomo-sidebar-identity-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.memos-flomo-identity-menu {
+  position: absolute;
+  top: calc(100% - 0.1rem);
+  left: 0;
+  min-width: 11.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.35rem;
+  border: 1px solid #eceeea;
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.075);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.25rem);
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease;
+}
+
+.memos-flomo-sidebar-identity:hover .memos-flomo-identity-menu,
+.memos-flomo-sidebar-identity:focus-within .memos-flomo-identity-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.memos-flomo-identity-menu a {
+  display: flex;
+  align-items: center;
+  min-height: 1.9rem;
+  padding: 0 0.55rem;
+  border-radius: 0.45rem;
+  color: #4f5751;
+  font-size: 0.86rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.memos-flomo-identity-menu a:hover,
+.memos-flomo-identity-menu a.is-active {
+  background: #31c76a;
+  color: #ffffff;
+}
+
+.memos-flomo-sidebar-divider {
+  width: calc(100% - 0.5rem);
+  height: 1px;
+  margin: 0.58rem auto 0.72rem;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, rgba(49, 199, 106, 0), rgba(49, 199, 106, 0.36) 48%, rgba(49, 199, 106, 0)),
+    linear-gradient(90deg, rgba(49, 199, 106, 0.04), rgba(49, 199, 106, 0.1), rgba(49, 199, 106, 0.04));
+}
+
 /* Calendar heatmap */
 [role="grid"] button[aria-label],
 [role="grid"] div[class*="cursor-default"] {
   border: 0;
-  border-radius: 0.32rem;
+  border-radius: 0.2rem;
   box-shadow: none;
-  min-height: 1.15rem;
+  width: 0.64rem !important;
+  height: 0.64rem !important;
+  min-width: 0.64rem !important;
+  min-height: 0.64rem !important;
   font-size: 0;
   font-weight: 500;
 }
 
 aside [role="grid"] {
-  gap: 0.36rem !important;
+  align-items: center;
+}
+
+aside [role="grid"] > [role="rowgroup"] {
+  display: grid !important;
+  grid-template-columns: repeat(7, 0.64rem) !important;
+  justify-content: center;
+}
+
+aside [role="grid"] {
+  gap: 0.25rem !important;
 }
 
 aside [role="grid"] [role="row"] {
-  gap: 0.36rem !important;
+  gap: 0.25rem !important;
 }
 
 [role="grid"] button[aria-label] {
@@ -435,7 +754,7 @@ button.inline-flex.items-center.px-2.text-sm.text-muted-foreground:hover {
 .memos-flomo-inline-tools {
   display: inline-flex;
   align-items: center;
-  gap: 0.2rem;
+  gap: 0.1rem;
   margin-left: 0.45rem;
 }
 
@@ -451,8 +770,9 @@ button.inline-flex.items-center.px-2.text-sm.text-muted-foreground:hover {
   border: 0;
   background: transparent;
   color: #a0a5a0;
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.82rem;
+  min-width: 1.82rem;
+  height: 1.82rem;
   border-radius: 0.45rem;
   display: inline-flex;
   align-items: center;
@@ -473,7 +793,7 @@ button.inline-flex.items-center.px-2.text-sm.text-muted-foreground:hover {
 
 .memos-flomo-inline-tool[data-kind="list"],
 .memos-flomo-inline-tool[data-kind="ordered"] {
-  font-size: 0.92rem;
+  font-size: 0.86rem;
   font-weight: 700;
 }
 
@@ -483,11 +803,12 @@ button.inline-flex.items-center.px-2.text-sm.text-muted-foreground:hover {
 }
 
 .memos-flomo-inline-tool[data-kind="media"] {
-  width: auto;
-  padding: 0 0.35rem;
-  font-size: 0.72rem;
+  width: 1.82rem;
+  min-width: 1.82rem;
+  padding: 0;
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
 
 /* flomo-like shortcut area */
@@ -495,41 +816,84 @@ button.inline-flex.items-center.px-2.text-sm.text-muted-foreground:hover {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.16rem;
-  margin: 0.45rem 0 0.7rem;
-  padding: 0 0.25rem;
+  gap: 0.04rem;
+  margin: 0 0 0.78rem;
+  padding: 0 0.08rem;
+}
+
+.memos-flomo-quick-links::before {
+  display: none;
 }
 
 .memos-flomo-quick-link {
+  position: relative;
   width: 100%;
-  min-height: 1.95rem;
+  min-height: 1.72rem;
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  border-radius: 0.45rem;
-  color: #2f312f;
-  font-size: 0.92rem;
-  font-weight: 600;
+  gap: 0.56rem;
+  border-radius: 0.38rem;
+  color: #66706a;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1;
   text-decoration: none;
-  padding: 0 0.65rem;
+  padding: 0 0.34rem 0 0.46rem;
   transition:
     background-color 140ms ease,
     color 140ms ease;
 }
 
-.memos-flomo-quick-link:hover {
-  background: #eef8f2;
-  color: #20b65a;
+.memos-flomo-quick-link::before {
+  content: "";
+  position: absolute;
+  left: 0.14rem;
+  top: 50%;
+  width: 2px;
+  height: 0.86rem;
+  border-radius: 999px;
+  background: transparent;
+  transform: translateY(-50%);
 }
 
-.memos-flomo-quick-link.is-active {
+.memos-flomo-quick-link:hover {
   background: #31c76a;
   color: #ffffff;
-  padding: 0 0.65rem;
+}
+
+.memos-flomo-quick-link.is-active,
+a.memos-flomo-quick-link.is-active {
+  background: rgba(49, 199, 106, 0.07) !important;
+  color: #2e3832 !important;
+  font-weight: 600;
+  padding: 0 0.34rem 0 0.46rem;
+}
+
+.memos-flomo-quick-link.is-active::before,
+a.memos-flomo-quick-link.is-active::before {
+  background: rgba(49, 199, 106, 0.82);
+}
+
+.memos-flomo-quick-link.is-active:hover,
+a.memos-flomo-quick-link.is-active:hover {
+  background: #31c76a !important;
+  color: #ffffff !important;
 }
 
 .memos-flomo-quick-link-icon {
-  display: none;
+  width: 1rem;
+  height: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 1rem;
+  color: currentColor;
+}
+
+.memos-flomo-quick-link-icon svg {
+  width: 1rem;
+  height: 1rem;
+  display: block;
 }
 
 /* Vertical tag tree */
@@ -593,5 +957,10 @@ div.sticky.top-0 {
   div:has(> div.w-full.flex.flex-col.flex-1 > .memo-editor-content),
   .memos-flomo-editor {
     border-radius: 0.95rem;
+  }
+
+  .memos-flomo-content-header {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
   }
 }
