@@ -925,13 +925,91 @@
     });
   };
 
+  let tagExpandedSet = new Set();
+  let tagCountCache = null;
+  let tagCountFetching = false;
+
+  const computeHierarchicalCounts = (flatCounts) => {
+    const result = {};
+    const paths = Object.keys(flatCounts);
+    paths.forEach((path) => {
+      let total = flatCounts[path] || 0;
+      const prefix = path + "/";
+      paths.forEach((other) => {
+        if (other.startsWith(prefix)) {
+          total += flatCounts[other] || 0;
+        }
+      });
+      result[path] = total;
+    });
+    return result;
+  };
+
+  const fetchTagCounts = () => {
+    if (tagCountFetching) return;
+    tagCountFetching = true;
+    loadCalendarStats()
+      .then((stats) => {
+        const raw = stats.tagCount || stats.tag_count || {};
+        tagCountCache = computeHierarchicalCounts(raw);
+        tagCountFetching = false;
+        scheduleScans();
+      })
+      .catch(() => {
+        tagCountFetching = false;
+      });
+  };
+
+  const buildTagTree = (items) => {
+    const tree = {};
+    items.forEach(({ path }) => {
+      const parts = path.split("/").filter(Boolean);
+      let current = tree;
+      let accumulated = "";
+      parts.forEach((part, i) => {
+        accumulated = i === 0 ? part : accumulated + "/" + part;
+        if (!current[accumulated]) {
+          current[accumulated] = {};
+        }
+        current = current[accumulated];
+      });
+    });
+    return tree;
+  };
+
+  const getDirectChildren = (tree, parentPath) => {
+    if (!parentPath) {
+      return Object.keys(tree);
+    }
+    const parts = parentPath.split("/").filter(Boolean);
+    let current = tree;
+    let accumulated = "";
+    for (let i = 0; i < parts.length; i++) {
+      accumulated = i === 0 ? parts[i] : accumulated + "/" + parts[i];
+      if (!current[accumulated]) return [];
+      current = current[accumulated];
+    }
+    return Object.keys(current);
+  };
+
+  const hasChildren = (tree, path) => {
+    return getDirectChildren(tree, path).length > 0;
+  };
+
   const enhanceTags = () => {
+    if (!tagCountCache && !tagCountFetching) {
+      fetchTagCounts();
+    }
+
     getTagSections().forEach((section) => {
       section.classList.add("memos-flomo-tags-section");
       const tagList = Array.from(section.children).find((child) => child.className?.toString().includes("flex-wrap"));
       if (!tagList) return;
 
-      tagList.querySelectorAll("div[class*='cursor-pointer']").forEach((item) => {
+      const allItems = Array.from(tagList.querySelectorAll("div[class*='cursor-pointer']"));
+      const tagData = [];
+
+      allItems.forEach((item) => {
         const labelSpan = item.querySelector("span.truncate");
         if (!labelSpan) return;
 
@@ -939,21 +1017,116 @@
         if (!original) return;
 
         const path = original.replace(/^#/, "");
+        tagData.push({ item, labelSpan, path });
+      });
+
+      const tree = buildTagTree(tagData);
+
+      tagData.sort((a, b) => a.path.localeCompare(b.path));
+
+      tagData.forEach(({ item, labelSpan, path }) => {
         const parts = path.split("/").filter(Boolean);
         const depth = Math.max(0, parts.length - 1);
         const display = parts[parts.length - 1] || path;
+        const parentPath = parts.slice(0, -1).join("/");
+        const hasKids = hasChildren(tree, path);
 
         item.dataset.flomoTagPath = path;
         item.dataset.flomoTagDepth = String(depth);
         item.style.setProperty("--flomo-tag-depth", String(depth));
         item.classList.add("memos-flomo-tag-item");
-        item.title = path;
+        item.title = "#" + path;
+
+        if (depth > 0) {
+          const parentExpanded = tagExpandedSet.has(parentPath);
+          if (!parentExpanded) {
+            item.dataset.flomoTagHidden = "true";
+          } else {
+            item.dataset.flomoTagHidden = "false";
+          }
+        } else {
+          item.dataset.flomoTagHidden = "false";
+        }
 
         if (labelSpan.textContent !== display) {
           labelSpan.textContent = display;
         }
+
+        let toggle = item.querySelector(".memos-flomo-tag-toggle");
+        if (!toggle) {
+          toggle = document.createElement("span");
+          toggle.className = "memos-flomo-tag-toggle";
+          item.insertBefore(toggle, item.firstChild);
+        }
+
+        if (hasKids) {
+          toggle.classList.add("has-children");
+          const isExpanded = tagExpandedSet.has(path);
+          toggle.dataset.expanded = String(isExpanded);
+          toggle.textContent = isExpanded ? "▼" : "#";
+
+          if (!toggle.dataset.flomoToggleBound) {
+            toggle.dataset.flomoToggleBound = "true";
+            toggle.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (tagExpandedSet.has(path)) {
+                tagExpandedSet.delete(path);
+                collapseDescendants(path);
+              } else {
+                tagExpandedSet.add(path);
+              }
+              scheduleScans();
+            });
+          }
+        } else {
+          toggle.classList.remove("has-children");
+          toggle.textContent = "#";
+          toggle.dataset.expanded = "false";
+        }
+
+        let countSpan = item.querySelector(".memos-flomo-tag-count");
+        if (tagCountCache) {
+          const count = tagCountCache[path] || 0;
+          if (count > 0) {
+            if (!countSpan) {
+              countSpan = document.createElement("span");
+              countSpan.className = "memos-flomo-tag-count";
+              item.appendChild(countSpan);
+            }
+            countSpan.textContent = `(${count})`;
+          } else if (countSpan) {
+            countSpan.remove();
+          }
+        }
+
+        const hashIcon = item.querySelector(":scope > svg");
+        if (hashIcon) {
+          hashIcon.remove();
+        }
+
+        const originalCount = item.querySelector(":scope > div span.opacity-60, :scope > div span[class*='opacity']");
+        if (originalCount) {
+          originalCount.remove();
+        }
       });
+
+      const currentOrder = Array.from(tagList.children);
+      const desiredOrder = tagData.map(({ item }) => item);
+      const needsReorder = desiredOrder.some((el, i) => currentOrder[i] !== el);
+      if (needsReorder) {
+        desiredOrder.forEach((item) => tagList.appendChild(item));
+      }
     });
+  };
+
+  const collapseDescendants = (parentPath) => {
+    const prefix = parentPath + "/";
+    for (const key of tagExpandedSet) {
+      if (key.startsWith(prefix)) {
+        tagExpandedSet.delete(key);
+      }
+    }
   };
 
   const scanEditors = () => {

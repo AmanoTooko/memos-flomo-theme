@@ -189,8 +189,8 @@ border-radius: 6px;
 font-size: 0.85rem;
 }
 
-/* 强制标签垂直紧凑排列 /
-.memos-flomo-tags-section > div[class="flex-wrap"] {
+/* 强制标签垂直紧凑排列 */
+.memos-flomo-tags-section > div[class*="flex-wrap"] {
 display: flex !important;
 flex-direction: column !important;
 align-items: stretch !important;
@@ -262,6 +262,12 @@ font-weight: 500 !important;
 .memos-flomo-tag-item div {
 color: #2f312f !important;
 }
+.memos-flomo-tag-item .memos-flomo-tag-toggle {
+color: #a4a8a4 !important;
+}
+.memos-flomo-tag-item .memos-flomo-tag-count {
+color: #a4a8a4 !important;
+}
 .memos-flomo-tag-item:hover,
 .memos-flomo-tag-item.is-active {
 background: #eef8f2 !important;
@@ -269,6 +275,69 @@ color: #20b65a !important;
 }
 .memos-flomo-tag-item:hover span,
 .memos-flomo-tag-item.is-active span {
+color: #20b65a !important;
+}
+
+/* 标签树：隐藏折叠的子标签 */
+.memos-flomo-tag-item[data-flomo-tag-hidden="true"] {
+display: none !important;
+}
+
+/* 标签树：展开/折叠切换按钮 */
+.memos-flomo-tag-toggle {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 1.1rem;
+min-width: 1.1rem;
+height: 1.1rem;
+margin-right: 0.2rem;
+font-size: 0.75rem;
+color: #a4a8a4;
+cursor: default;
+user-select: none;
+border-radius: 3px;
+transition: color 140ms ease, background 140ms ease;
+flex-shrink: 0;
+}
+
+.memos-flomo-tag-toggle.has-children {
+cursor: pointer;
+}
+
+.memos-flomo-tag-toggle.has-children:hover {
+color: #31c76a;
+background: rgba(49, 199, 106, 0.08);
+}
+
+/* 有子标签的toggle：默认显示#，hover时变▼ */
+.memos-flomo-tag-toggle.has-children[data-expanded="false"]::after {
+content: "";
+}
+.memos-flomo-tag-item:hover .memos-flomo-tag-toggle.has-children[data-expanded="false"] {
+font-size: 0;
+}
+.memos-flomo-tag-item:hover .memos-flomo-tag-toggle.has-children[data-expanded="false"]::after {
+content: "▼";
+font-size: 0.6rem;
+}
+
+/* 已展开状态始终显示▼ */
+.memos-flomo-tag-toggle.has-children[data-expanded="true"] {
+font-size: 0.6rem;
+}
+
+/* 标签计数 */
+.memos-flomo-tag-count {
+margin-left: auto;
+padding-left: 0.4rem;
+font-size: 0.75rem;
+color: #a4a8a4 !important;
+font-weight: 400 !important;
+flex-shrink: 0;
+}
+
+.memos-flomo-tag-item:hover .memos-flomo-tag-count {
 color: #20b65a !important;
 }
 
