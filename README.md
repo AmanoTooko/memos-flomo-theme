@@ -17,6 +17,7 @@ Place your screenshots at the paths below and they will render here:
 - Applies a restrained flomo-like green palette with lighter surfaces, softer borders, and calmer hover states.
 - Uses a Chinese-friendly sans-serif stack: `BarlowF, "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif`.
 - Makes the desktop layout more compact, with the sidebar and content area visually closer together.
+- Uses a wider flomo-like sidebar and a constrained content column to keep editor and memo cards from feeling oversized.
 - Hides the desktop left navigation rail and moves its main entries into a username hover menu.
 - Moves search to the upper-right content header, aligned with the current view title.
 - Shows the current username at the top of the sidebar.

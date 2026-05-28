@@ -2,6 +2,7 @@
 
 ## Current UI refresh
 
+- Rebalanced the page against the flomo reference: wider sidebar, tighter content max width, softer editor/card borders, and a restored green active quick-link block.
 - Retuned the calendar after review: reduced the excessive column spacing, restored a more square flomo-like cell shape, and lightened the page background.
 - Added a JavaScript-rendered recent activity calendar that fetches current-user stats from the Memos API.
 - Changed the custom calendar to a fixed 12-week, Monday-first, 84-cell grid.
