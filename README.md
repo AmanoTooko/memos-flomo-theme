@@ -21,7 +21,7 @@ Place your screenshots at the paths below and they will render here:
 - Moves search to the upper-right content header, aligned with the current view title.
 - Shows the current username at the top of the sidebar.
 - Replaces the original month calendar with a 12-week, Monday-first, 84-cell recent activity heatmap.
-- Uses lighter calendar colors, smaller rounded cells, wider spacing, and date-only hover titles.
+- Uses lighter calendar colors, compact square-ish cells, controlled spacing, and date-only hover titles.
 - Adds a flomo-style quick navigation area for All Notes, Inbox, Daily Review, AI Insight, and Random Walk.
 - Uses consistent icon slots for sidebar quick links.
 - Converts tag display into a vertical list and indents nested tags such as `life/books`.

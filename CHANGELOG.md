@@ -2,6 +2,7 @@
 
 ## Current UI refresh
 
+- Retuned the calendar after review: reduced the excessive column spacing, restored a more square flomo-like cell shape, and lightened the page background.
 - Added a JavaScript-rendered recent activity calendar that fetches current-user stats from the Memos API.
 - Changed the custom calendar to a fixed 12-week, Monday-first, 84-cell grid.
 - Kept future days in the current week as blank cells so the heatmap never ends with a partial isolated cell.

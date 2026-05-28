@@ -3,7 +3,7 @@
    Updated for: compact sidebar, recent calendar, calmer palette, better wide-screen layout. */
 
 :root {
-  --background: #f8f8f6;
+  --background: #fbfbfa;
   --foreground: #2f312f;
   --card: #ffffff;
   --card-foreground: #2f312f;
@@ -11,9 +11,9 @@
   --popover-foreground: #2f312f;
   --primary: #31c76a;
   --primary-foreground: #ffffff;
-  --secondary: #f3f4f2;
+  --secondary: #f5f5f4;
   --secondary-foreground: #525552;
-  --muted: #f3f4f2;
+  --muted: #f5f5f4;
   --muted-foreground: #a4a8a4;
   --accent: #eff8f2;
   --accent-foreground: #2f312f;
@@ -22,7 +22,7 @@
   --border: #ebece8;
   --input: #ebece8;
   --ring: rgba(49, 199, 106, 0.14);
-  --sidebar: #f8f8f6;
+  --sidebar: #fbfbfa;
   --sidebar-foreground: #333633;
   --sidebar-accent: #31c76a;
   --sidebar-accent-foreground: #ffffff;
@@ -77,7 +77,7 @@ div[class*="justify-center"][class*="sm:pl-16"] {
     left: 0;
     width: 13.75rem;
     border-right: 1px solid #eceeea;
-    background: #f8f8f6;
+    background: #fbfbfa;
   }
 
   div[class*="md:pl-64"] {
@@ -104,7 +104,7 @@ div[class*="justify-center"][class*="sm:pl-16"] {
   main > section[class*="@container"] > div.sticky.top-0.h-svh.shrink-0 {
     width: 22rem;
     border-right: 1px solid #eceeea;
-    background: #f8f8f6;
+    background: #fbfbfa;
   }
 
   main > section[class*="@container"] > div[class*="min-w-0"][class*="flex-1"] > div[class*="mx-auto"] {
@@ -246,8 +246,8 @@ aside .border-dashed {
 
 .memos-flomo-calendar {
   container-type: inline-size;
-  --flomo-calendar-cell: clamp(0.66rem, 3.3cqw, 0.82rem);
-  --flomo-calendar-gap: clamp(0.24rem, 1.28cqw, 0.42rem);
+  --flomo-calendar-cell: clamp(0.82rem, 4.2cqw, 1rem);
+  --flomo-calendar-gap: clamp(0.12rem, 0.58cqw, 0.22rem);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -299,12 +299,12 @@ aside .border-dashed {
 
 .memos-flomo-calendar-grid {
   display: grid;
+  grid-template-columns: repeat(var(--flomo-calendar-columns), minmax(0, 1fr));
   grid-template-rows: repeat(7, var(--flomo-calendar-cell));
   grid-auto-flow: column;
-  grid-auto-columns: var(--flomo-calendar-cell);
   gap: var(--flomo-calendar-gap);
   width: 100%;
-  justify-content: space-between;
+  justify-content: stretch;
   align-items: center;
 }
 
@@ -312,8 +312,9 @@ aside .border-dashed {
   display: block;
   width: var(--flomo-calendar-cell);
   height: var(--flomo-calendar-cell);
-  border-radius: 0.28rem;
-  background: #f1f2f0;
+  justify-self: center;
+  border-radius: 0.16rem;
+  background: #f0f0ef;
   border: 1px solid transparent;
   color: transparent !important;
   text-decoration: none;
@@ -324,8 +325,8 @@ aside .border-dashed {
 }
 
 a.memos-flomo-calendar-cell:hover {
-  background: #d8f2e1;
-  border-color: rgba(49, 199, 106, 0.3);
+  background: #dff4e7;
+  border-color: rgba(49, 199, 106, 0.26);
   transform: translateY(-1px);
 }
 
@@ -335,23 +336,23 @@ a.memos-flomo-calendar-cell:hover {
 }
 
 .memos-flomo-calendar-cell.is-today {
-  border-color: rgba(49, 199, 106, 0.42);
+  border-color: rgba(49, 199, 106, 0.34);
 }
 
 .memos-flomo-calendar-cell.level-1 {
-  background: #def4e6;
+  background: #dff4e7;
 }
 
 .memos-flomo-calendar-cell.level-2 {
-  background: #c4edd2;
+  background: #c7efd5;
 }
 
 .memos-flomo-calendar-cell.level-3 {
-  background: #8fdcad;
+  background: #a4e3bb;
 }
 
 .memos-flomo-calendar-cell.level-4 {
-  background: #38c970;
+  background: #70d99a;
 }
 
 .memos-flomo-calendar-month-labels {
@@ -788,7 +789,7 @@ button.inline-flex.items-center.px-2.text-sm.text-muted-foreground:hover {
 
 .memos-flomo-inline-tool:hover {
   color: #686d68;
-  background: #f3f4f2;
+  background: #f5f5f4;
 }
 
 .memos-flomo-inline-tool[data-kind="list"],
@@ -940,7 +941,7 @@ hr,
 }
 
 div.sticky.top-0 {
-  background: rgba(248, 248, 246, 0.92);
+  background: rgba(251, 251, 250, 0.92);
   backdrop-filter: blur(10px);
   box-shadow: none;
 }
